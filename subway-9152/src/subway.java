@@ -42,7 +42,11 @@ public class subway {
                 readStation(args[4]);
                 sub.getXianLu(args[2], args[6]);
                 System.out.println(sub);
-
+            }
+            if (args.length == 8) {
+                readStation(args[4]);
+                sub.getPath(args[2], args[3],args[7]);
+                System.out.println(sub);
             }
 
         } catch (IllegalArgumentException e) {
