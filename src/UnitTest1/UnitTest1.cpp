@@ -3,7 +3,9 @@
 #include "../subway/Station.h"
 #include "../subway/StationManager.h"
 #include "../subway/subway.h"
+#include <windows.h>
 
+#define TESTFILE "..\\..\\subway\\test.txt"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace SubwayUnitTest
@@ -16,7 +18,7 @@ namespace SubwayUnitTest
 		{
 			StationManager stationManager;
 			map<string, shared_ptr<Line>> lines;
-			readFile("D:\\work\\study\\subwayStudy\\src\\UnitTest1\\test.txt", stationManager, lines);
+			readFile(TESTFILE, stationManager, lines);
 			auto rt = stationManager.queryRoute("x", "a");
 			Assert::IsTrue(rt.first == StartNotFound);
 		}
@@ -24,7 +26,7 @@ namespace SubwayUnitTest
 		{
 			StationManager stationManager;
 			map<string, shared_ptr<Line>> lines;
-			readFile("D:\\work\\study\\subwayStudy\\src\\UnitTest1\\test.txt", stationManager, lines);
+			readFile(TESTFILE, stationManager, lines);
 			auto rt = stationManager.queryRoute("a", "x");
 			Assert::IsTrue(rt.first == EndNotFound);
 		}
@@ -32,7 +34,7 @@ namespace SubwayUnitTest
 		{
 			StationManager stationManager;
 			map<string, shared_ptr<Line>> lines;
-			readFile("D:\\work\\study\\subwayStudy\\src\\UnitTest1\\test.txt", stationManager, lines);
+			readFile(TESTFILE, stationManager, lines);
 			auto rt = stationManager.queryRoute("a", "n");
 			Assert::IsTrue(rt.first == RouteDoesNotExist);
 		}
@@ -40,7 +42,7 @@ namespace SubwayUnitTest
 		{
 			StationManager stationManager;
 			map<string, shared_ptr<Line>> lines;
-			readFile("D:\\work\\study\\subwayStudy\\src\\UnitTest1\\test.txt", stationManager, lines);
+			readFile(TESTFILE, stationManager, lines);
 			auto rt = stationManager.queryRoute("a", "f");
 			rt.second->dump();
 			Assert::IsTrue(rt.second->getStartStaion()->name_=="a");

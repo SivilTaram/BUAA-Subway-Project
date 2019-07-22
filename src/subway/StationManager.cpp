@@ -1,8 +1,8 @@
 #include "StationManager.h"
 #include <iostream>
+#include <sstream>
+#include <vector>
 #include "subway.h"
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
 
 int StationManager::addStation(string stationName, string lineName)
 {
@@ -74,20 +74,43 @@ void StationManager::checkRoutes(list<shared_ptr<Route>>& prepareRoute, shared_p
 	}
 }
 
+void split(std::string& s, std::string& delim, std::vector< std::string > &ret)
+{
+	size_t last = 0;
+	size_t index = s.find_first_of(delim, last);
+	while (index != std::string::npos)
+	{
+		ret.push_back(s.substr(last, index - last));
+		last = index + 1;
+		index = s.find_first_of(delim, last);
+	}
+	if (index - last > 0)
+	{
+		ret.push_back(s.substr(last, index - last));
+	}
+}
+
+
 int readFile(string fileName, StationManager& stations, map<string, shared_ptr<Line>>& lines)
 {
 	ifstream inFile(fileName);
-	json data;
-	try
-	{
-		inFile >> data;
-		if (!data.is_array()) {
-			cerr << "线路格式不对。";
-			return -1;
-		}
-		for (auto line : data)
+	if (inFile.is_open()){
+		while (!inFile.eof())
 		{
-			string lineName = line["name"];
+			string inputLine;
+			inFile >> inputLine;
+			vector<string> dataArry;
+			string spliter(":");
+			split(inputLine, spliter, dataArry);
+			if (dataArry.size() != 2) {
+				cerr << "线路输入格式不对";
+				return -1;
+			}
+			string lineName=dataArry[0];
+			spliter = ",";
+			vector<string> stationArry;
+			split(dataArry[1], spliter, stationArry);
+			
 			shared_ptr<Line> newLine = make_shared<Line>(lineName);
 			if (!lines[lineName]) {
 				lines[lineName] = newLine;
@@ -97,8 +120,9 @@ int readFile(string fileName, StationManager& stations, map<string, shared_ptr<L
 				cerr << "线路重复" << endl;
 				return -1;
 			}
+
 			shared_ptr<Station> prevStaion;
-			for (auto stationName : line["stations"])
+			for (auto stationName : stationArry)
 			{
 				if (!newLine->hasStation(stationName))
 				{
@@ -120,12 +144,59 @@ int readFile(string fileName, StationManager& stations, map<string, shared_ptr<L
 				prevStaion = newStation;
 			}
 		}
+		inFile.close();
+	}
+	else {
+		cerr << "输入文件不存在\n";
+	}
+	//try
+	//{
+	//	inFile >> data;
+	//	if (!data.is_array()) {
+	//		cerr << "线路格式不对。";
+	//		return -1;
+	//	}
+	//	for (auto line : data)
+	//	{
+	//		string lineName = line["name"];
+	//		shared_ptr<Line> newLine = make_shared<Line>(lineName);
+	//		if (!lines[lineName]) {
+	//			lines[lineName] = newLine;
+	//		}
+	//		else
+	//		{
+	//			cerr << "线路重复" << endl;
+	//			return -1;
+	//		}
+	//		shared_ptr<Station> prevStaion;
+	//		for (auto stationName : line["stations"])
+	//		{
+	//			if (!newLine->hasStation(stationName))
+	//			{
+	//				if (stations.addStation(stationName, lineName) != 0)
+	//				{
+	//					return -1;
+	//				};
+	//				newLine->add(stationName);
+	//			}
+	//			else {
+	//				cerr << "线路站点重复" << endl;
+	//				return -1;
+	//			}
+	//			shared_ptr<Station> newStation = stations.getStation(stationName);
+	//			if (prevStaion) {
+	//				prevStaion->setNextStation(newStation, lineName);
+	//				newStation->setNextStation(prevStaion, lineName);//反向路线
+	//			}
+	//			prevStaion = newStation;
+	//		}
+	//	}
 
-	}
-	catch (json::exception e)
-	{
-		cerr << e.what() << endl;
-		return -1;
-	}
+	//}
+	//catch (json::exception e)
+	//{
+	//	cerr << e.what() << endl;
+	//	return -1;
+	//}
 	return 0;
 }

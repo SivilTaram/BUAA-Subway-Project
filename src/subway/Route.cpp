@@ -51,10 +51,14 @@ shared_ptr<Station> Route::getEndStaion()
 void Route::dump(ostream& stream) const
 {
 	if (stations_.empty()) return;
-	stream << changeCount_ << endl;
-	string lineName = stations_.front()->routeLine;
-	for (auto station : stations_)
+	stream << stations_.size() << endl;
+	auto iter = stations_.begin();
+	stream << (*iter)->station->name_ << endl;
+	iter++;
+	string lineName = (*iter)->routeLine;
+	for (;iter!=stations_.end();iter++)
 	{
+		auto station = *iter;
 		if (lineName != station->routeLine) {
 			stream << station->routeLine << endl;
 			lineName = station->routeLine;

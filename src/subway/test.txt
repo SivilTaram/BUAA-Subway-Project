@@ -1,18 +1,5 @@
-[
-    {
-        "name":"1",
-        "stations":["a","b","c","d"]
-    },
-    {
-        "name":"2",
-        "stations":["b","e","g","i"]
-    },
-    {
-        "name":"3",
-        "stations":["d","f","h","j"]
-    },
-    {
-        "name":"4",
-        "stations":["e","f"]
-    }
-]
+1:a,b,c,d
+2:b,e,g,i
+3:d,f,h,j
+4:e,f
+5:m,n
