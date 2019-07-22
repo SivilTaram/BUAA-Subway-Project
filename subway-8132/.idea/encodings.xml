@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/routine.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/ybf/Floyd.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/ybf/Subway.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/ybf/data/DataReader.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/ybf/test/FileInputTest.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/ybf/test/FileOutputTest.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/ybf/test/InputVariableTest.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/station.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/subway.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/subway_error.txt" charset="GBK" />
+    <file url="PROJECT" charset="GBK" />
+  </component>
+</project>
