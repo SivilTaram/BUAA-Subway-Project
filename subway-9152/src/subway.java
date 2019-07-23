@@ -7,14 +7,15 @@ import java.util.List;
 public class subway {
     ComputeShort cs;
     private String[][] xianlu;
-    String resource;
-    public subway(){
+    String resource="subway.txt";
+
+    public subway() {
         Data data = null;
         cs = new ComputeShort();
         try {
-            String _xianlu[][] = createArray("src/" + resource);
-            xianlu = _xianlu;
-            data = new Data(_xianlu);
+            xianlu = createArray( resource);
+
+            data = new Data(xianlu);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -24,8 +25,12 @@ public class subway {
     public static void main(String[] args) {
 
         subway sub = new subway();
+        readStation("subway.txt");
+        System.out.println("subway.txt loaded");
+        System.out.println(sub.getXianLu("1号线", "subway.txt"));
+        System.out.println(sub.getPath("刘园","天津站","routline.txt"));
 
-
+/*
         // readStation("subway.txt" );
         try {
             if (args.length == 0) {
@@ -52,7 +57,7 @@ public class subway {
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
-
+*/
     }
 
     public static List readStation(String fileName) {
@@ -60,22 +65,21 @@ public class subway {
         try {
             String encoding = "GBK";
             File file = new File(fileName);
-            if (file.isFile() && file.exists()) {
-                InputStreamReader read = new InputStreamReader(
-                        new FileInputStream(file), encoding);
-                BufferedReader bufferedReader = new BufferedReader(read);
-                String lineTxt = null;
-                while ((lineTxt = bufferedReader.readLine()) != null) {
-                    list.add(lineTxt);
-                }
-                read.close();
-            } else {
-                System.out.println("找不到文件");
+            InputStreamReader read = new InputStreamReader(
+                    new FileInputStream(file), encoding);
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineTxt = null;
+            while ((lineTxt = bufferedReader.readLine()) != null) {
+                list.add(lineTxt);
             }
+            read.close();
         } catch (Exception e) {
             System.out.println("出错了");
             e.printStackTrace();
         }
+
+
+
         return list;
     }
 
@@ -127,18 +131,18 @@ public class subway {
     }
 
 
-    public String getXianLu(String line1,String path)
-    {StringBuffer sb2=new StringBuffer();
+    public String getXianLu(String line1, String path) {
+        StringBuffer sb2 = new StringBuffer();
         List<String> list1 = readStation("subway.txt");
         for (int i = 0; i < list1.size(); i++) {
             String linetxt1 = list1.get(i);
+
         }
 
-        for(int i=0;i<xianlu.length;i++)
-        {
-            if (xianlu[i][0].equals(line1))
-            {
+        for (int i = 0; i < xianlu.length; i++) {
+            if (xianlu[i][0].equals(line1)) {
                 sb2.append(list1.get(i));
+
             }
         }
         try {
